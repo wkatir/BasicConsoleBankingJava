@@ -57,7 +57,11 @@ public class Cuenta {
      */
     
     public void depositar(double cantidad){
-        saldo += cantidad;
+        if( cantidad >= 1 && cantidad <= 4999){
+            saldo += cantidad;
+        }else{
+            System.out.println("La cantidad mínima a depositar es de $1.00 y no puede exceder $4999.00 .");
+        }
     }
     
       /**

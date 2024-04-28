@@ -8,49 +8,58 @@ package com.mycompany.sistemabancariov;
  *
  * @author Wilmer Salazar
  */
-public class Servicio {
-    private String nombre;
-    private String descripcion;
+
+/**
+ * Enumeración que representa los diferentes tipos de servicios disponibles.
+ */
+
+enum TipoServicio {
+    AGUA(75.0),
+    TELEFONO(25.0),
+    LUZ(100.0),
+    CUOTA_UNIVERSITARIA(150.0);
+
     private double monto;
 
-    public Servicio(String nombre, String descripcion, double monto) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+    TipoServicio(double monto) {
         this.monto = monto;
     }
 
-      /**
-     * Obtiene el nombre del servicio.
-     *
-     * @return el nombre del servicio
-     */
-    
-    public String getNombre() {
-        return nombre;
-    }
-
-    
-    /**
-     * Obtiene la descripción del servicio.
-     *
-     * @return la descripción del servicio
-     */
-    
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-       /**
-     * Obtiene el monto del servicio.
-     *
-     * @return el monto del servicio
-     */
-    
     public double getMonto() {
         return monto;
     }
-    
-    
-    
-    
 }
+
+/**
+ * Clase que representa un servicio a pagar.
+ */
+
+public class Servicio {
+    private TipoServicio tipoServicio;
+    private String descripcion;
+
+    public Servicio(TipoServicio tipoServicio, String descripcion) {
+        this.tipoServicio = tipoServicio;
+        this.descripcion = descripcion;
+    }
+
+    public TipoServicio getTipoServicio() {
+        return tipoServicio;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+    
+    public double getMonto(){
+        return tipoServicio.getMonto();
+    }
+    
+    
+    
+    }
+    
+    
+    
+    
+
