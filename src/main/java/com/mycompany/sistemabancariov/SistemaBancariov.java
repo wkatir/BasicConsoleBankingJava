@@ -23,27 +23,24 @@ public class SistemaBancariov {
             
             switch (opcion) {
                 case 1:
-                    agregarCliente(banco, scanner);
-                    break;
-                case 2:
                     agregarCuenta(banco, scanner);
                     break;
-                case 3:
+                case 2:
                     realizarTransferencia(banco, scanner);
                     break;
-                case 4:
+                case 3:
                     actualizarCuenta(banco, scanner);
                     break;
-                case 5:
+                case 4:
                     pagarServicio(banco, scanner);
                     break;
-                case 6:
+                case 5:
                     consultarDatos(banco);
                     break;
-                case 7:
+                case 6:
                     eliminarCuenta(banco, scanner);
                     break;
-                case 8:
+                case 7:
                     System.out.println("Saliendo del programa ...");
                     break;
     
@@ -51,7 +48,7 @@ public class SistemaBancariov {
                     System.out.println("Opción no válida. Inténtelo de nuevo.");
             }
             
-        }while(opcion != 8);
+        }while(opcion != 7);
         
         scanner.close();
     }
@@ -62,14 +59,13 @@ public class SistemaBancariov {
     
        private static void mostrarMenu() {
        System.out.println("\nMenú del Sistema Bancario");
-       System.out.println("1. Agregar cliente");
-       System.out.println("2. Agregar cuenta");
-       System.out.println("3. Realizar transferencia");
-       System.out.println("4. Actualizar cuenta");
-       System.out.println("5. Pagar servicio");
-       System.out.println("6. Consultar datos");
-       System.out.println("7. Eliminar cuenta");
-       System.out.println("8. Salir");
+       System.out.println("1. Agregar cuenta");
+       System.out.println("2. Realizar transferencia");
+       System.out.println("3. Actualizar cuenta");
+       System.out.println("4. Pagar servicio");
+       System.out.println("5. Consultar datos");
+       System.out.println("6. Eliminar cuenta");
+       System.out.println("7. Salir");
        System.out.print("Ingrese una opción: ");
    }
  
@@ -88,7 +84,7 @@ public class SistemaBancariov {
            try {
                opcion = scanner.nextInt();
                scanner.nextLine(); 
-               opcionValida = opcion >= 1 && opcion <= 8;
+               opcionValida = opcion >= 1 && opcion <= 7;
            } catch (InputMismatchException e) {
                System.out.println("Debe ingresar un número válido.");
                scanner.nextLine();
@@ -130,50 +126,48 @@ public class SistemaBancariov {
       }
        
        
-       
-         /**
-    * Agrega un nuevo cliente al banco.
-    *
-    * @param banco   el banco al que se agregará el cliente
-    * @param scanner el objeto Scanner para leer la entrada del usuario
-    */
-       
-       private static void agregarCliente(Banco banco, Scanner scanner){
-           System.out.println("Ingrese el nombre del cliente");
-           String nombre = scanner.nextLine();
-           int numeroCuenta;
-           do{
-               System.out.println("Ingrese el número de cuenta (debe ser un valor positivo): ");
-               numeroCuenta = (int) obtenerNumeroValidoPositivo(scanner);
-           }while(numeroCuenta < 0);
-           Cliente cliente = new Cliente(nombre, numeroCuenta);
-           banco.agregarCliente(cliente);
-           System.out.println("Cliente agregado correctamente.");
-       }
-
-
           /**
     * Agrega una nueva cuenta al banco.
     *
     * @param banco   el banco al que se agregará la cuenta
     * @param scanner el objeto Scanner para leer la entrada del usuario
     */
-       
-       private static void agregarCuenta(Banco banco, Scanner scanner){
-           int numeroCuenta;
-           do{
-               System.out.println("Ingrese el número de cuenta (debe ser un valor positivo): ");
-               numeroCuenta = (int) obtenerNumeroValidoPositivo(scanner);
-           }while(numeroCuenta < 0);
-           double saldoInicial;
-           do{
-               System.out.println("Ingrese el saldo inicial (debe ser un valor positivo): ");
-               saldoInicial = obtenerNumeroValidoPositivo(scanner);
-           }while(saldoInicial < 0);
-           Cuenta cuenta = new Cuenta(numeroCuenta, saldoInicial);
-           banco.agregarCuenta(cuenta);
-           System.out.println("Cuenta agregada correctamente.");
-       }
+      
+      private static void agregarCuenta(Banco banco, Scanner scanner){
+          System.out.println("Ingrese el nombre del cliente: ");
+          String nombre = scanner.nextLine();
+          int numeroCuenta;
+          boolean numeroCuentaValido;
+          do{
+              do{
+                  System.out.println("Ingrese el número de cuenta (debe ser un valor positivo): ");
+                  numeroCuenta = (int) obtenerNumeroValidoPositivo(scanner);
+              }while(numeroCuenta < 0);
+              
+              numeroCuentaValido = !banco.existeNumeroCuenta(numeroCuenta);
+              if(!numeroCuentaValido){
+                  System.out.println("El número de cuenta ingresado ya existe. Por favor, ingrese otro número.");
+              }
+              
+          }while(!numeroCuentaValido);
+          
+          Cliente cliente = new Cliente(nombre, numeroCuenta);
+          banco.agregarCliente(cliente);
+          
+          double saldoInicial;
+          
+          do{
+              System.out.println("Ingrese el saldo inicial (debe ser un valor positivo): ");
+              saldoInicial = obtenerNumeroValidoPositivo(scanner);
+          }while(saldoInicial < 0);
+          
+          Cuenta cuenta = new Cuenta(numeroCuenta, saldoInicial, cliente);
+          banco.agregarCuenta(cuenta);
+          System.out.println("Cuenta agregada correctamente.");
+          
+      }
+      
+      
        
          /**
     * Realiza una transferencia entre cuentas.
@@ -224,7 +218,7 @@ public class SistemaBancariov {
            }while(numeroCuenta < 0);
            double nuevoSaldo;
            do{
-               System.out.println("Ingrese el nuevo saldo (debe ser un valor positivo): ");
+               System.out.println("Ingrese el saldo que desea depositar (debe ser un valor positivo): ");
                nuevoSaldo = obtenerNumeroValidoPositivo(scanner);
            }while(nuevoSaldo < 0);
            if(banco.actualizarCuenta(numeroCuenta, nuevoSaldo)){
@@ -281,16 +275,15 @@ public class SistemaBancariov {
     * @param banco el banco del cual se consultarán los datos
     */
        
-        private static void consultarDatos(Banco banco) {
-       System.out.println("Clientes:");
-       for (Cliente cliente : banco.obtenerClientes()) {
-           System.out.println("Nombre: " + cliente.getNombre() + ", Número de cuenta: " + cliente.getNumeroCuenta());
-       }
-       System.out.println("\nCuentas:");
-       for (Cuenta cuenta : banco.obtenerCuentas()) {
-           System.out.println("Número de cuenta: " + cuenta.getNumeroCuenta() + ", Saldo: " + cuenta.getSaldo());
-       }
-   }
+     private static void consultarDatos(Banco banco) {
+    System.out.println("Clientes y cuentas:");
+    for (Cuenta cuenta : banco.obtenerCuentas()) {
+        System.out.println("Nombre del cliente: " + cuenta.getNombre());
+        System.out.println("Número de cuenta: " + cuenta.getNumeroCuenta());
+        System.out.println("Saldo: " + cuenta.getSaldo());
+        System.out.println();
+    }
+}
        
         /**
     * Elimina una cuenta específica del banco.

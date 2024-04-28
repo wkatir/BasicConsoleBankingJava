@@ -16,26 +16,28 @@ package com.mycompany.sistemabancariov;
 public class Cuenta {
     private int numeroCuenta;
     private double saldo;
+    private Cliente cliente;
 
     
-     /**
-     * Crea una nueva cuenta con el número de cuenta y saldo inicial especificados.
+      /**
+     * Crea una nueva cuenta con el número de cuenta, saldo inicial y cliente especificados.
      *
      * @param numeroCuenta el número de cuenta
      * @param saldoInicial el saldo inicial de la cuenta
+     * @param cliente      el cliente asociado a la cuenta
      */
     
-    public Cuenta(int numeroCuenta, double saldo) {
+    public Cuenta(int numeroCuenta, double saldo, Cliente cliente) {
         this.numeroCuenta = numeroCuenta;
         this.saldo = saldo;
+        this.cliente = cliente;
     }
-    
+
     /**
      * Obtiene el número de cuenta.
      *
      * @return el número de cuenta
      */
-    
     public int getNumeroCuenta() {
         return numeroCuenta;
     }
@@ -49,6 +51,17 @@ public class Cuenta {
     public double getSaldo() {
         return saldo;
     }
+
+    /**
+    * Obtiene el nombre del cliente asociado a este objeto.
+    *
+    * @return El nombre del cliente.
+    */
+    
+    public String getNombre() {
+        return cliente.getNombre();
+    }
+    
     
         /**
      * Deposita la cantidad especificada en la cuenta.
@@ -79,20 +92,6 @@ public class Cuenta {
             return false;
         }
     }
-
-    
-        /**
-     * Establece el saldo de la cuenta.
-     *
-     * @param saldo el nuevo saldo de la cuenta
-     */
-    
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-    
-  
-    
     
     
     

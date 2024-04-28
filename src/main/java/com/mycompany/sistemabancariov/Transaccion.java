@@ -15,7 +15,7 @@ package com.mycompany.sistemabancariov;
 
 public class Transaccion {
     
-        /**
+     /**
      * Transfiere una cantidad de dinero de una cuenta de origen a una cuenta de destino.
      *
      * @param cuentaOrigen  la cuenta de origen

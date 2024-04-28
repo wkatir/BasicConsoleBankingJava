@@ -46,6 +46,12 @@ public class Cliente {
      * @return el número de cuenta del cliente
      */  
       
+      /**
+    * Obtiene el nombre del cliente asociado a este objeto.
+    *
+    * @return El nombre del cliente.
+    */
+      
      public int getNumeroCuenta() {
         return numeroCuenta;
     }

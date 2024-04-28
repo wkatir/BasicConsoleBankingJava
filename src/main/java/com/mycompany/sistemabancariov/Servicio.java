@@ -17,13 +17,26 @@ enum TipoServicio {
     AGUA(75.0),
     TELEFONO(25.0),
     LUZ(100.0),
-    CUOTA_UNIVERSITARIA(150.0);
+    CUOTA_UNIVERSITARIA(150.0),
+    PAGADO(0.0);
 
     private double monto;
 
+     /**
+     * Crea una nueva instancia de TipoServicio con el monto especificado.
+     *
+     * @param monto el monto del servicio
+     */
+    
     TipoServicio(double monto) {
         this.monto = monto;
     }
+    
+      /**
+     * Obtiene el monto del servicio.
+     *
+     * @return el monto del servicio
+     */
 
     public double getMonto() {
         return monto;
@@ -38,24 +51,56 @@ public class Servicio {
     private TipoServicio tipoServicio;
     private String descripcion;
 
+    
+      /**
+     * Crea un nuevo servicio con el tipo de servicio y la descripción especificados.
+     *
+     * @param tipoServicio el tipo de servicio
+     * @param descripcion  la descripción del servicio
+     */
+    
     public Servicio(TipoServicio tipoServicio, String descripcion) {
         this.tipoServicio = tipoServicio;
         this.descripcion = descripcion;
     }
 
+      /**
+     * Obtiene el tipo de servicio.
+     *
+     * @return el tipo de servicio
+     */
+    
     public TipoServicio getTipoServicio() {
         return tipoServicio;
     }
 
+     /**
+     * Obtiene la descripción del servicio.
+     *
+     * @return la descripción del servicio
+     */
+    
     public String getDescripcion() {
         return descripcion;
     }
+    
+     /**
+     * Obtiene el monto del servicio.
+     *
+     * @return el monto del servicio
+     */
     
     public double getMonto(){
         return tipoServicio.getMonto();
     }
     
+        /**
+     * Marca el servicio como pagado, estableciendo su monto en cero.
+     */
     
+     public void pagarServicio() {
+        tipoServicio = TipoServicio.PAGADO;
+    }
     
     }
     

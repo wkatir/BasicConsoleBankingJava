@@ -90,27 +90,27 @@ public class Banco {
      * Actualiza el saldo de una cuenta específica.
      *
      * @param numeroCuenta el número de cuenta a actualizar
-     * @param nuevoSaldo   el nuevo saldo de la cuenta
+     * @param nuevoSaldo   el saldo agregado de la cuenta
      * @return true si la actualización fue exitosa, false en caso contrario
      */
        
        public boolean actualizarCuenta(int numeroCuenta, double nuevoSaldo){
            Cuenta cuenta = buscarCuenta(numeroCuenta);
            if(cuenta != null){
-               cuenta.setSaldo(nuevoSaldo);
+               cuenta.depositar(nuevoSaldo);
                return true;
            }
            return false;
            
        }
        
-          /**
-     * Realiza el pago de un servicio desde una cuenta específica.
-     *
-     * @param numeroCuenta el número de cuenta desde la cual se realizará el pago
-     * @param servicio     el servicio a pagar
-     * @return true si el pago fue exitoso, false en caso contrario
-     */
+        /**
+    * Realiza el pago de un servicio desde una cuenta específica.
+    *
+    * @param numeroCuenta el número de cuenta desde la cual se realizará el pago
+    * @param servicio     el servicio a pagar
+    * @return true si el pago fue exitoso, false en caso contrario
+    */
        
       public boolean pagarServicio(int numeroCuenta, Servicio servicio) {
         Cuenta cuenta = buscarCuenta(numeroCuenta);
@@ -118,6 +118,7 @@ public class Banco {
             try {
                 if (cuenta.retirar(servicio.getMonto())) {
                     System.out.println("Pago de " + servicio.getTipoServicio().name() + " realizado correctamente.");
+                    servicio.pagarServicio();
                     return true;
                 }
             } catch (Exception e) {
@@ -175,4 +176,22 @@ public class Banco {
           }
           return false;
       } 
+      
+         /**
+    * Verifica si un número de cuenta ya existe en el banco.
+    *
+    * @param numeroCuenta el número de cuenta a verificar
+    * @return true si el número de cuenta ya existe, false en caso contrario
+    */
+        public boolean existeNumeroCuenta(int numeroCuenta) {
+       for (Cuenta cuenta : cuentas) {
+           if (cuenta.getNumeroCuenta() == numeroCuenta) {
+               return true;
+           }
+       }
+       return false;
+        }
+      
+      
+      
 }
