@@ -18,7 +18,38 @@ public class SistemaBancariov {
         Banco banco = new Banco();
         int opcion;
         do{
+            mostrarMenu();
             opcion = obtenerOpcionValida(scanner);
+            
+            switch (opcion) {
+                case 1:
+                    agregarCliente(banco, scanner);
+                    break;
+                case 2:
+                    agregarCuenta(banco, scanner);
+                    break;
+                case 3:
+                    realizarTransferencia(banco, scanner);
+                    break;
+                case 4:
+                    actualizarCuenta(banco, scanner);
+                    break;
+                case 5:
+                    pagarServicio(banco, scanner);
+                    break;
+                case 6:
+                    consultarDatos(banco);
+                    break;
+                case 7:
+                    eliminarCuenta(banco, scanner);
+                    break;
+                case 8:
+                    System.out.println("Saliendo del programa ...");
+                    break;
+    
+                default:
+                    System.out.println("Opción no válida. Inténtelo de nuevo.");
+            }
             
         }while(opcion != 8);
         
@@ -250,8 +281,35 @@ public class SistemaBancariov {
     * @param banco el banco del cual se consultarán los datos
     */
        
+        private static void consultarDatos(Banco banco) {
+       System.out.println("Clientes:");
+       for (Cliente cliente : banco.obtenerClientes()) {
+           System.out.println("Nombre: " + cliente.getNombre() + ", Número de cuenta: " + cliente.getNumeroCuenta());
+       }
+       System.out.println("\nCuentas:");
+       for (Cuenta cuenta : banco.obtenerCuentas()) {
+           System.out.println("Número de cuenta: " + cuenta.getNumeroCuenta() + ", Saldo: " + cuenta.getSaldo());
+       }
+   }
        
-       
+        /**
+    * Elimina una cuenta específica del banco.
+    *
+    * @param banco   el banco del cual se eliminará la cuenta
+    * @param scanner el objeto Scanner para leer la entrada del usuario
+    */
+   private static void eliminarCuenta(Banco banco, Scanner scanner) {
+       int numeroCuenta;
+       do {
+           System.out.print("Ingrese el número de cuenta a eliminar (debe ser un valor positivo): ");
+           numeroCuenta = (int) obtenerNumeroValidoPositivo(scanner);
+       } while (numeroCuenta < 0);
+       if (banco.eliminarCuenta(numeroCuenta)) {
+           System.out.println("Cuenta eliminada correctamente.");
+       } else {
+           System.out.println("No se encontró la cuenta especificada.");
+       }
+   }
 
 
 
