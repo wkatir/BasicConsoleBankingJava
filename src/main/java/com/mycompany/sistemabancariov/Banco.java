@@ -112,22 +112,23 @@ public class Banco {
     * @return true si el pago fue exitoso, false en caso contrario
     */
        
-      public boolean pagarServicio(int numeroCuenta, Servicio servicio) {
-        Cuenta cuenta = buscarCuenta(numeroCuenta);
-        if (cuenta != null) {
-            try {
-                if (cuenta.retirar(servicio.getMonto())) {
-                    System.out.println("Pago de " + servicio.getTipoServicio().name() + " realizado correctamente.");
-                    servicio.pagarServicio();
-                    return true;
-                }
-            } catch (Exception e) {
-                System.out.println("Dato incorrecto ingresado.");
+public boolean pagarServicio(int numeroCuenta, Servicio servicio) {
+    Cuenta cuenta = buscarCuenta(numeroCuenta);
+    if (cuenta != null) {
+        try {
+            if (cuenta.retirar(servicio.getMonto())) {
+                System.out.println("Pago de " + servicio.getTipoServicio().name() + " realizado correctamente.");
+                servicio.pagarServicio(); // Marcar el servicio como pagado
+                return true;
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        System.out.println("No se pudo realizar el pago del servicio.");
-        return false;
     }
+    System.out.println("No se pudo realizar el pago del servicio.");
+    return false;
+}
+
     
        /**
      * Obtiene una lista de todos los clientes del banco.

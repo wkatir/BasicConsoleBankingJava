@@ -3,6 +3,5 @@ com\mycompany\sistemabancariov\Banco.class
 com\mycompany\sistemabancariov\SistemaBancariov.class
 com\mycompany\sistemabancariov\Cuenta.class
 com\mycompany\sistemabancariov\Servicio.class
-com\mycompany\sistemabancariov\SaldoInsuficienteException.class
 com\mycompany\sistemabancariov\Cliente.class
 com\mycompany\sistemabancariov\TipoServicio.class

@@ -235,39 +235,40 @@ public class SistemaBancariov {
     * @param scanner el objeto Scanner para leer la entrada del usuario
     */
        
-       private static void pagarServicio(Banco banco, Scanner scanner){
-           int numeroCuenta;
-           do{
-               System.out.print("Ingrese el número de cuenta desde la cual realizar el pago (debe ser un valor positivo): ");
-               numeroCuenta = (int) obtenerNumeroValidoPositivo(scanner);
-           }while(numeroCuenta < 0);
-           scanner.nextLine();
-           
-           System.out.println("Selecciona el tipo de servicio: ");
-           for (TipoServicio tipoServicio : TipoServicio.values()) {
-               System.out.println(tipoServicio.ordinal() + 1 + ". " + tipoServicio.name() + " - Monto: $" + tipoServicio.getMonto());
-           }
-           System.out.println("Ingrese el número correspondiente al servicio: ");
-           int opcion = (int) obtenerNumeroValidoPositivo(scanner);
-           if(opcion < 1 || opcion > TipoServicio.values().length){
-               System.out.println("Opción no válida.");
-               return;
-           }
-           TipoServicio tipoServicio = TipoServicio.values()[opcion - 1];
-           System.out.println("Ingrese la descripción del servicio: ");
-           String descripcionServicio = scanner.nextLine();
-           
-           Servicio servicio = new Servicio(tipoServicio, descripcionServicio);
-           try{
-               if(banco.pagarServicio(numeroCuenta, servicio)){
-                   System.out.println("Pago realizado correctamente.");
-               }
-               
-           }catch(Exception e){
-               System.out.println("Error al realizar el pago.");
-           }
-           
-       }
+    private static void pagarServicio(Banco banco, Scanner scanner) {
+        int numeroCuenta;
+        do {
+            System.out.print("Ingrese el número de cuenta desde la cual realizar el pago (debe ser un valor positivo): ");
+            numeroCuenta = (int) obtenerNumeroValidoPositivo(scanner);
+        } while (numeroCuenta < 0);
+        scanner.nextLine();
+
+        System.out.println("Selecciona el tipo de servicio: ");
+        for (TipoServicio tipoServicio : TipoServicio.values()) {
+            System.out.println(tipoServicio.ordinal() + 1 + ". " + tipoServicio.name() + " - Monto: $" + tipoServicio.getMonto());
+        }
+        System.out.println("Ingrese el número correspondiente al servicio: ");
+        int opcion = (int) obtenerNumeroValidoPositivo(scanner);
+        if (opcion < 1 || opcion > TipoServicio.values().length) {
+            System.out.println("Opción no válida.");
+            return;
+        }
+        TipoServicio tipoServicio = TipoServicio.values()[opcion - 1];
+        System.out.println("Ingrese la descripción del servicio: ");
+        String descripcionServicio = scanner.nextLine();
+
+        Servicio servicio = new Servicio(tipoServicio, descripcionServicio);
+        try {
+            if (banco.pagarServicio(numeroCuenta, servicio)) {
+                System.out.println("Pago realizado correctamente.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al realizar el pago.");
+        }
+
+    }
+
        
          /**
     * Consulta y muestra los datos de clientes y cuentas del banco.
@@ -278,7 +279,7 @@ public class SistemaBancariov {
      private static void consultarDatos(Banco banco) {
     System.out.println("Clientes y cuentas:");
     for (Cuenta cuenta : banco.obtenerCuentas()) {
-        System.out.println("Nombre del cliente: " + cuenta.getNombre());
+        System.out.println("\nNombre del cliente: " + cuenta.getNombre());
         System.out.println("Número de cuenta: " + cuenta.getNumeroCuenta());
         System.out.println("Saldo: " + cuenta.getSaldo());
         System.out.println();

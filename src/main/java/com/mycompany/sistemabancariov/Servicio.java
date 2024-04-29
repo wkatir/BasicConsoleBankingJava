@@ -43,6 +43,7 @@ enum TipoServicio {
     }
 }
 
+
 /**
  * Clase que representa un servicio a pagar.
  */
@@ -50,6 +51,7 @@ enum TipoServicio {
 public class Servicio {
     private TipoServicio tipoServicio;
     private String descripcion;
+    private double monto;
 
     
       /**
@@ -62,6 +64,7 @@ public class Servicio {
     public Servicio(TipoServicio tipoServicio, String descripcion) {
         this.tipoServicio = tipoServicio;
         this.descripcion = descripcion;
+        this.monto = tipoServicio.getMonto();
     }
 
       /**
@@ -91,8 +94,12 @@ public class Servicio {
      */
     
     public double getMonto(){
+    if (tipoServicio == TipoServicio.PAGADO) {
+        return 0.0;
+    } else {
         return tipoServicio.getMonto();
     }
+}
     
         /**
      * Marca el servicio como pagado, estableciendo su monto en cero.
@@ -100,11 +107,12 @@ public class Servicio {
     
      public void pagarServicio() {
         tipoServicio = TipoServicio.PAGADO;
+        // Establecer el monto en 0.0 cuando se marca como pagado
+        this.monto = 0.0;
     }
     
+      public void setTipoServicio(TipoServicio tipoServicio) {
+        this.tipoServicio = tipoServicio;
     }
-    
-    
-    
-    
-
+     
+    }
